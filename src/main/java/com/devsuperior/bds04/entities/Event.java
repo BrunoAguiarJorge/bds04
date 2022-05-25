@@ -1,13 +1,16 @@
 package com.devsuperior.bds04.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,9 +24,11 @@ public class Event {
 	private LocalDate date;
 	private String url;
 	
-	@ManyToOne
-	@JoinColumn(name = "city_id")
-	private City city;
+	@ManyToMany
+	@JoinTable(name = "tb_event_city", 
+	joinColumns = @JoinColumn(name = "event_id"), 
+	inverseJoinColumns = @JoinColumn(name = "city_id"))
+	Set<City> cities = new HashSet<>();
 	
 	public Event() {
 	}
@@ -33,7 +38,6 @@ public class Event {
 		this.name = name;
 		this.date = date;
 		this.url = url;
-		this.city = city;
 	}
 
 	public Long getId() {
@@ -68,11 +72,9 @@ public class Event {
 		this.url = url;
 	}
 
-	public City getCity() {
-		return city;
+	public Set<City> getCities() {
+		return cities;
 	}
 
-	public void setCity(City city) {
-		this.city = city;
-	}
+	
 }
