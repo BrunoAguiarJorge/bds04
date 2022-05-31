@@ -7,6 +7,5 @@ import com.devsuperior.bds04.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	// check if there is an email in the db
-	User findByEmail(String email);
+		User findByEmail(String email);
 }
